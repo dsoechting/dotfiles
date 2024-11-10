@@ -1,0 +1,27 @@
+This file encapsulates the common keybinds for my workflow
+
+Most of the text editing vim motions are unchanged or have slight modifications
+The leader key is set to Space or " "
+
+Git menu (powered by fugitive): <leader>gs
+Git diff: <leader>gd
+
+Split vertical/right: <leader>l
+Split horizontal/down: <leader>j
+Close split: <leader>x
+
+Navigate pane left: <C-h>
+Navigate pane right: <C-l>
+Navigate pane up: <C-k>
+Navigate pane down: <C-j>
+
+Search git files in Telescope: <C-p>
+Search string in files (grep): <leader>F
+
+Toggle file tree: <leader>e
+the file tree has similar keybinds as normal motion to navigate the files. 
+    https://github.com/nvim-tree/nvim-tree.lua/blob/master/doc/nvim-tree-lua.txt
+Create file/directory while in tree: a
+    You will see the text menu at the bottom of the screen
+    
+
