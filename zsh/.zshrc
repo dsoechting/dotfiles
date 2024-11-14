@@ -10,6 +10,7 @@ alias cat="bat"
 alias zshrc="vim ~/.zshrc"
 alias zshsource="source ~/.zshrc"
 alias conf="cd ~/.config; nvim ."
+alias dotfiles="cd ~/dotfiles; nvim ."
 
 # History
 HISTSIZE=5000

@@ -79,10 +79,14 @@ end, '[W]orkspace [L]ist Folders')
 
 -- Navigation -------------------------------------------
 
--- navigation comes from tmux plugin. Use <C-h/j/k/l>
 keymap.set("n", "<leader>L", "<cmd>vsplit<cr>", { desc = "Split window vertically" })
 keymap.set("n", "<leader>J", "<cmd>split<cr>", { desc = "Split window horizontally" })
 keymap.set("n", "<leader>X", "<cmd>close<CR>", { desc = "Close current split" })
+-- moving between splits
+vim.keymap.set('n', '<C-h>', require('smart-splits').move_cursor_left)
+vim.keymap.set('n', '<C-j>', require('smart-splits').move_cursor_down)
+vim.keymap.set('n', '<C-k>', require('smart-splits').move_cursor_up)
+vim.keymap.set('n', '<C-l>', require('smart-splits').move_cursor_right)
 
 
 -- Open file tree
