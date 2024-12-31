@@ -1,7 +1,7 @@
 -- Pull in the wezterm API
 local wezterm = require "wezterm"
 local smart_splits = wezterm.plugin.require('https://github.com/mrjones2014/smart-splits.nvim')
-local sessionizer = wezterm.plugin.require("https://github.com/dsoechting/sessionizer.wezterm")
+local workspace_switcher = wezterm.plugin.require("https://github.com/MLFlexer/smart_workspace_switcher.wezterm")
 
 -- This table will hold the configuration.
 local config = {}
@@ -15,6 +15,7 @@ end
 -- This is where you actually apply your config choices
 
 config.color_scheme = 'Tokyo Night'
+local colors = wezterm.color.get_builtin_schemes()["Tokyo Night"]
 
 config.font = wezterm.font("JetBrainsMonoNL Nerd Font Mono")
 config.font_size = 17
@@ -24,20 +25,17 @@ config.max_fps = 120
 
 config.window_decorations = "RESIZE"
 
--- sessionizer
-sessionizer.apply_to_config(config, true) -- disable default binds (right now you can also just not call this)
-
-sessionizer.config = {
-  paths = {
-    "/Users/dsoechting/repos",
-    "/Users/dsoechting/.config",
-    "/Users/dsoechting/dotfiles",
-  },
-  command_options = {
-    fd_path = "/opt/homebrew/bin/fd"
-  }
-}
-
+-- Workspace switcher
+workspace_switcher.zoxide_path = "/opt/homebrew/bin/zoxide"
+local workspace_rg_filter = " | /opt/homebrew/bin/rg -e '/repos/' -e 'dsoechting/dotfiles'"
+workspace_switcher.workspace_formatter = function(label)
+  return wezterm.format({
+    { Attribute = { Italic = true } },
+    { Foreground = { Color = colors.ansi[3] } },
+    { Background = { Color = colors.background } },
+    { Text = "󱂬 : " .. label },
+  })
+end
 
 -- tmux
 config.leader = { key = "a", mods = "CTRL", timeout_milliseconds = 2000 }
@@ -64,22 +62,22 @@ config.keys = {
   },
   {
     mods = "LEADER",
-    key = "LeftArrow",
+    key = "H",
     action = wezterm.action.AdjustPaneSize { "Left", 5 }
   },
   {
     mods = "LEADER",
-    key = "RightArrow",
+    key = "L",
     action = wezterm.action.AdjustPaneSize { "Right", 5 }
   },
   {
     mods = "LEADER",
-    key = "DownArrow",
+    key = "J",
     action = wezterm.action.AdjustPaneSize { "Down", 5 }
   },
   {
     mods = "LEADER",
-    key = "UpArrow",
+    key = "K",
     action = wezterm.action.AdjustPaneSize { "Up", 5 }
   },
   {
@@ -100,7 +98,7 @@ config.keys = {
   {
     key = "s",
     mods = "LEADER",
-    action = sessionizer.show
+    action = workspace_switcher.switch_workspace({ extra_args = workspace_rg_filter }),
   }
 }
 
@@ -125,7 +123,7 @@ wezterm.on("update-right-status", function(window, _)
   local prefix = ""
 
   if window:leader_is_active() then
-    prefix = " " .. utf8.char(0x1f47e) -- ocean wave
+    prefix = " " .. utf8.char(0x1f47e) -- shark
     SOLID_LEFT_ARROW = utf8.char(0xe0b2)
   end
 
@@ -139,6 +137,44 @@ wezterm.on("update-right-status", function(window, _)
     ARROW_FOREGROUND,
     { Text = SOLID_LEFT_ARROW }
   })
+end)
+
+-- Workspace name Right status
+wezterm.on("smart_workspace_switcher.workspace_switcher.chosen", function(window, workspace)
+  local gui_win = window:gui_window()
+  local base_path = string.gsub(workspace, "(.*[/\\])(.*)", "%2")
+  gui_win:set_right_status(wezterm.format({
+    { Foreground = { Color = "#7aa2f7" } },
+    { Text = base_path .. "  " },
+  }))
+end)
+
+wezterm.on("smart_workspace_switcher.workspace_switcher.created", function(window, workspace)
+  -- Workspace name Right status
+  local gui_win = window:gui_window()
+  local base_path = string.gsub(workspace, "(.*[/\\])(.*)", "%2")
+  gui_win:set_right_status(wezterm.format({
+    { Foreground = { Color = "#7aa2f7" } },
+    { Text = base_path .. "  " },
+  }))
+
+  -- Default workspace config
+  -- nvim - terminals - lazygit
+  local original_pane = window:active_pane()
+  local original_tab = window:active_tab()
+  local gui_window = window:gui_window()
+
+  original_tab:set_title('nvim')
+  original_pane:send_text('nvim .\n')
+
+  local tab_1, _, _ = window:spawn_tab {}
+  tab_1:set_title('terminals')
+
+  local tab_2, pane_2, _ = window:spawn_tab {}
+  tab_2:set_title("git")
+  pane_2:send_text("lazygit \n")
+
+  gui_window:perform_action(wezterm.action.ActivateTab(0), original_pane)
 end)
 
 
