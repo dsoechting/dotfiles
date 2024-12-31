@@ -6,6 +6,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 alias vim="nvim"
+alias lg="lazygit"
 alias cat="bat"
 alias zshrc="vim ~/.zshrc"
 alias zshsource="source ~/.zshrc"
