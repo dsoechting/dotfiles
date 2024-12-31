@@ -23,8 +23,6 @@ config.audible_bell = "Disabled"
 config.max_fps = 120
 
 config.window_decorations = "RESIZE"
-config.window_background_opacity = 0.95
-config.macos_window_background_blur = 9
 
 -- sessionizer
 sessionizer.apply_to_config(config, true) -- disable default binds (right now you can also just not call this)
@@ -155,7 +153,7 @@ smart_splits.apply_to_config(config, {
   direction_keys = { 'h', 'n', 'p', 'l' },
   -- modifier keys to combine with direction_keys
   modifiers = {
-    move = 'CTRL', -- modifier to use for pane movement, e.g. CTRL+h to move left
+    move = 'CTRL',   -- modifier to use for pane movement, e.g. CTRL+h to move left
     resize = 'META', -- modifier to use for pane resize, e.g. META+h to resize to the left
   },
 })
