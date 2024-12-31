@@ -37,6 +37,7 @@ autoload -U compinit; compinit
 
 # Shell integrations
 eval "$(fzf --zsh)"
+eval "$(zoxide init zsh)"
 
 # Wezterm path
 PATH="$PATH:/Applications/WezTerm.app/Contents/MacOS"
