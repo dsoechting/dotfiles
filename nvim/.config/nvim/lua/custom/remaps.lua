@@ -3,6 +3,7 @@ local keymap = vim.keymap
 -- local imports
 local telescope_builtin = require("telescope.builtin")
 local harpoon = require "harpoon"
+local fzf_lua = require("fzf-lua")
 
 -- In this case, we create a function that lets us more easily define mappings specific
 -- for LSP related items. It sets the mode, buffer and description for us each time.
@@ -62,9 +63,23 @@ keymap.set('n', '<C-m>', '<cmd>cprev<CR>zz')
 
 
 -- Lsp
-nmap('gd', telescope_builtin.lsp_definitions, '[G]oto [D]efinition')
+-- nmap('gd', telescope_builtin.lsp_definitions, '[G]oto [D]efinition')
+-- nmap('gr', function() telescope_builtin.lsp_references({ fname_width = 100 }) end, '[G]oto [R]eferences')
+-- nmap('gi', telescope_builtin.lsp_implementations, '[G]oto [I]mplementation')
+nmap('<leader>D', telescope_builtin.lsp_type_definitions, 'Type [D]efinition')
+nmap('<leader>ds', telescope_builtin.lsp_document_symbols, '[D]ocument [S]ymbols')
+nmap('<leader>ws', telescope_builtin.lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
+
+-- Lsp fzf-lua
+nmap('gd', "<cmd>FzfLua lsp_definitions     jump_to_single_result=true ignore_current_line=true<cr>",
+    '[G]oto [D]efinition')
+nmap('gr', "<cmd>FzfLua lsp_references     jump_to_single_result=true ignore_current_line=true<cr>",
+    '[G]oto [R]eferences')
+nmap('gi', "<cmd>FzfLua lsp_implementations     jump_to_single_result=true ignore_current_line=true<cr>",
+    '[G]oto [D]efinition')
+
 nmap('gr', function() telescope_builtin.lsp_references({ fname_width = 100 }) end, '[G]oto [R]eferences')
-nmap('gI', telescope_builtin.lsp_implementations, '[G]oto [I]mplementation')
+nmap('gi', telescope_builtin.lsp_implementations, '[G]oto [I]mplementation')
 nmap('<leader>D', telescope_builtin.lsp_type_definitions, 'Type [D]efinition')
 nmap('<leader>ds', telescope_builtin.lsp_document_symbols, '[D]ocument [S]ymbols')
 nmap('<leader>ws', telescope_builtin.lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
@@ -93,20 +108,16 @@ vim.keymap.set('n', '<C-l>', require('smart-splits').move_cursor_right)
 keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
 
 -- Telescope
-keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<cr>", { desc = "Fuzzy find files in cwd" })
 keymap.set("n", "<leader>fg", "<cmd>Telescope live_grep<cr>", { desc = "Find string in cwd" })
-keymap.set("n", "<leader>fs", ":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>")
 keymap.set('n', '<leader>fk', telescope_builtin.keymaps, { desc = '[S]earch [K]eymaps' })
--- See `:help telescope.builtin`
-keymap.set('n', '<leader><space>', telescope_builtin.oldfiles, { desc = '[?] Find recently opened files' })
-keymap.set('n', '<leader>?', telescope_builtin.buffers, { desc = '[ ] Find existing buffers' })
-keymap.set('n', '<leader>/', function()
-    -- You can pass additional configuration to telescope to change theme, layout, etc.
-    telescope_builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
-        winblend = 10,
-        previewer = true,
-    })
-end, { desc = '[/] Fuzzily search in current buffer' })
+
+-- fzf-lua
+keymap.set("n", "<leader>ff", fzf_lua.files, { desc = "Fuzzy find files in cwd" })
+keymap.set("n", "<leader>fs", fzf_lua.live_grep_glob, { desc = "[F]ind [S]tring with live grep" })
+keymap.set('n', '<leader>fr', fzf_lua.resume, { desc = 'FZF resume previous search' })
+keymap.set('n', '<leader>fq', fzf_lua.quickfix, { desc = 'FZF resume previous search' })
+keymap.set('n', '<leader><space>', fzf_lua.oldfiles, { desc = 'Find recently opened files' })
+keymap.set("n", "<leader>/", fzf_lua.lgrep_curbuf, { desc = "" })
 
 -- Harpoon
 keymap.set("n", "<leader>h", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end,
@@ -126,5 +137,5 @@ keymap.set("n", "<leader>z", "<cmd>ZenMode<cr>", { desc = "Toggle ZenMode" })
 keymap.set("n", "<leader>P", "<cmd>Format<cr>", { desc = "Format code" })
 
 -- Trouble
-keymap.set("n", "<leader>e", function() require("trouble").toggle() end)
-keymap.set("n", "<leader>ew", function() require("trouble").toggle("workspace_diagnostics") end)
+nmap("<leader>tt", "<cmd>Trouble diagnostics toggle<cr>", 'Toggle Trouble')
+nmap("<leader>tq", "<cmd>Trouble qflist toggle<cr>", 'Toggle Trouble')
