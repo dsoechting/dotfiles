@@ -7,6 +7,8 @@ fi
 
 alias vim="nvim"
 alias lg="lazygit"
+alias gs="git status"
+alias gd="git diff"
 alias cat="bat"
 alias zshrc="vim ~/.zshrc"
 alias zshsource="source ~/.zshrc"
