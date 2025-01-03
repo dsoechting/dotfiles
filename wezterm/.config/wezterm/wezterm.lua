@@ -14,12 +14,23 @@ end
 
 -- This is where you actually apply your config choices
 
-config.color_scheme = 'Tokyo Night'
-local colors = wezterm.color.get_builtin_schemes()["Tokyo Night"]
+local theme = 'Black Metal (Gorgoroth) (base16)'
+-- local theme = 'Tokyo Night'
+config.color_scheme = theme
 
-config.font = wezterm.font("JetBrainsMonoNL Nerd Font Mono")
-config.font_size = 17
+local colors = wezterm.color.get_builtin_schemes()[theme]
+
+-- config.font = wezterm.font("JetBrainsMonoNL Nerd Font Mono")
+config.font = wezterm.font("Iosevka Nerd Font Mono")
+config.font_size = 19
+config.line_height = 1.1
 config.audible_bell = "Disabled"
+config.window_padding = {
+  left = 0,
+  right = 0,
+  top = 0,
+  bottom = 0,
+}
 
 config.max_fps = 120
 
@@ -118,24 +129,16 @@ config.use_fancy_tab_bar = false
 
 -- tmux status
 wezterm.on("update-right-status", function(window, _)
-  local SOLID_LEFT_ARROW = ""
-  local ARROW_FOREGROUND = { Foreground = { Color = "#c6a0f6" } }
   local prefix = ""
 
   if window:leader_is_active() then
-    prefix = " " .. utf8.char(0x1f47e) -- shark
-    SOLID_LEFT_ARROW = utf8.char(0xe0b2)
+    -- prefix = " " .. utf8.char(0x1f47e) -- shark
+    prefix = " " .. utf8.char(0x1F918) -- horns
   end
 
-  if window:active_tab():tab_id() ~= 0 then
-    ARROW_FOREGROUND = { Foreground = { Color = "#1e2030" } }
-  end -- arrow color based on if tab is first pane
-
   window:set_left_status(wezterm.format {
-    { Background = { Color = "#b7bdf8" } },
+    { Background = { Color = colors.brights[3] } },
     { Text = prefix },
-    ARROW_FOREGROUND,
-    { Text = SOLID_LEFT_ARROW }
   })
 end)
 
@@ -144,7 +147,8 @@ wezterm.on("smart_workspace_switcher.workspace_switcher.chosen", function(window
   local gui_win = window:gui_window()
   local base_path = string.gsub(workspace, "(.*[/\\])(.*)", "%2")
   gui_win:set_right_status(wezterm.format({
-    { Foreground = { Color = "#7aa2f7" } },
+    { Foreground = { Color = colors.brights[3] } },
+    -- { Foreground = { Color = colors.foreground } },
     { Text = base_path .. "  " },
   }))
 end)
@@ -154,7 +158,8 @@ wezterm.on("smart_workspace_switcher.workspace_switcher.created", function(windo
   local gui_win = window:gui_window()
   local base_path = string.gsub(workspace, "(.*[/\\])(.*)", "%2")
   gui_win:set_right_status(wezterm.format({
-    { Foreground = { Color = "#7aa2f7" } },
+    { Foreground = { Color = colors.ansi[1] } },
+    -- { Foreground = { Color = colors.foreground } },
     { Text = base_path .. "  " },
   }))
 

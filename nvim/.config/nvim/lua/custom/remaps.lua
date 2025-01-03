@@ -118,6 +118,7 @@ keymap.set('n', '<leader>fr', fzf_lua.resume, { desc = 'FZF resume previous sear
 keymap.set('n', '<leader>fq', fzf_lua.quickfix, { desc = 'FZF resume previous search' })
 keymap.set('n', '<leader><space>', fzf_lua.oldfiles, { desc = 'Find recently opened files' })
 keymap.set("n", "<leader>/", fzf_lua.lgrep_curbuf, { desc = "" })
+keymap.set("n", "<leader>ft", fzf_lua.colorschemes, { desc = "" })
 
 -- Harpoon
 keymap.set("n", "<leader>h", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end,
