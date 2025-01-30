@@ -22,7 +22,7 @@ local colors = wezterm.color.get_builtin_schemes()[theme]
 
 -- config.font = wezterm.font("JetBrainsMonoNL Nerd Font Mono")
 config.font = wezterm.font("Iosevka Nerd Font Mono")
-config.font_size = 19
+config.font_size = 23
 config.line_height = 1.1
 config.audible_bell = "Disabled"
 config.window_padding = {
@@ -198,6 +198,28 @@ smart_splits.apply_to_config(config, {
     resize = 'META', -- modifier to use for pane resize, e.g. META+h to resize to the left
   },
 })
+wezterm.on('user-var-changed', function(window, pane, name, value)
+  local overrides = window:get_config_overrides() or {}
+  if name == "ZEN_MODE" then
+    local incremental = value:find("+")
+    local number_value = tonumber(value)
+    if incremental ~= nil then
+      while (number_value > 0) do
+        window:perform_action(wezterm.action.IncreaseFontSize, pane)
+        number_value = number_value - 1
+      end
+      overrides.enable_tab_bar = false
+    elseif number_value < 0 then
+      window:perform_action(wezterm.action.ResetFontSize, pane)
+      overrides.font_size = nil
+      overrides.enable_tab_bar = true
+    else
+      overrides.font_size = number_value
+      overrides.enable_tab_bar = false
+    end
+  end
+  window:set_config_overrides(overrides)
+end)
 
 -- and finally, return the configuration to wezterm
 return config
