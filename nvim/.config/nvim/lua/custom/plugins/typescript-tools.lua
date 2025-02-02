@@ -10,6 +10,7 @@ return {
             client.server_capabilities.documentRangeFormattingProvider = false
           end,
       settings = {
+        tsserver_max_memory = 8192,
         jsx_close_tag = {
           enable = true,
           filetypes = { "javascriptreact", "typescriptreact" },

@@ -6,8 +6,8 @@ return {
     local plugin = require "no-clown-fiesta"
     plugin.setup({
       styles = {
-        type = { bold = true },
         lsp = { underline = false },
+        type = { bold = true },
         match_paren = { underline = true },
       },
     })

@@ -14,7 +14,8 @@ end
 
 -- This is where you actually apply your config choices
 
-local theme = 'Black Metal (Gorgoroth) (base16)'
+-- local theme = 'Black Metal (Gorgoroth) (base16)'
+local theme = "Black Metal (Immortal) (base16)"
 -- local theme = 'Tokyo Night'
 config.color_scheme = theme
 
@@ -31,6 +32,7 @@ config.window_padding = {
   top = 0,
   bottom = 0,
 }
+config.harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0' }
 
 config.max_fps = 120
 

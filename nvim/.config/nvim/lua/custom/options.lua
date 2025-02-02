@@ -65,4 +65,4 @@ vim.o.splitbelow = true
 -- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
 
--- vim.cmd("colorscheme no-clown-fiesta")
+vim.cmd("colorscheme no-clown-fiesta")
