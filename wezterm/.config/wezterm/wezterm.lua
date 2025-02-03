@@ -20,9 +20,16 @@ local theme = "Black Metal (Immortal) (base16)"
 config.color_scheme = theme
 
 local colors = wezterm.color.get_builtin_schemes()[theme]
+config.window_background_image = '/Users/dsoechting/.config/wezterm/images/interstellar.jpg'
+-- config.window_background_image = './wezterm/images/interstellar.jpg'
+config.window_background_image_hsb = {
+  -- Darken the background image by reducing it to 1/3rd
+  brightness = 0.005,
+}
 
--- config.font = wezterm.font("JetBrainsMonoNL Nerd Font Mono")
-config.font = wezterm.font("Iosevka Nerd Font Mono")
+config.font = wezterm.font("JetBrainsMonoNL Nerd Font Mono")
+-- config.font = wezterm.font("Iosevka Nerd Font Mono")
+-- config.font = wezterm.font("Hack Nerd Font Mono")
 config.font_size = 23
 config.line_height = 1.1
 config.audible_bell = "Disabled"
