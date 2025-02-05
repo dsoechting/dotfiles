@@ -76,21 +76,9 @@ nmap('gd', "<cmd>FzfLua lsp_definitions     jump_to_single_result=true ignore_cu
 nmap('gr', "<cmd>FzfLua lsp_references     jump_to_single_result=true ignore_current_line=true<cr>",
     '[G]oto [R]eferences')
 nmap('gi', "<cmd>FzfLua lsp_implementations     jump_to_single_result=true ignore_current_line=true<cr>",
-    '[G]oto [D]efinition')
-
-nmap('gr', function() telescope_builtin.lsp_references({ fname_width = 100 }) end, '[G]oto [R]eferences')
-nmap('gi', telescope_builtin.lsp_implementations, '[G]oto [I]mplementation')
-nmap('<leader>D', telescope_builtin.lsp_type_definitions, 'Type [D]efinition')
-nmap('<leader>ds', telescope_builtin.lsp_document_symbols, '[D]ocument [S]ymbols')
-nmap('<leader>ws', telescope_builtin.lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
-
--- Lesser used LSP functionality
-nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
-nmap('<leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
-nmap('<leader>wr', vim.lsp.buf.remove_workspace_folder, '[W]orkspace [R]emove Folder')
-nmap('<leader>wl', function()
-    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-end, '[W]orkspace [L]ist Folders')
+    '[G]oto [I]mplementation')
+nmap('gt', "<cmd>FzfLua lsp_typedefs     jump_to_single_result=true ignore_current_line=true<cr>",
+    '[G]oto [T]ypeDef')
 
 -- Navigation -------------------------------------------
 
@@ -119,6 +107,7 @@ keymap.set('n', '<leader>fq', fzf_lua.quickfix, { desc = 'FZF resume previous se
 keymap.set('n', '<leader><space>', fzf_lua.oldfiles, { desc = 'Find recently opened files' })
 keymap.set("n", "<leader>/", fzf_lua.lgrep_curbuf, { desc = "" })
 keymap.set("n", "<leader>ft", fzf_lua.colorschemes, { desc = "" })
+keymap.set("n", "<leader>fc", fzf_lua.quickfix_stack, { desc = "" })
 
 -- Harpoon
 keymap.set("n", "<leader>h", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end,
