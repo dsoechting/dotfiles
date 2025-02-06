@@ -8,12 +8,12 @@ return {
     config.defaults.actions.files["ctrl-t"] = trouble_actions.open
     return {
       fzf_colors = true,
-      grep = {
+      grep       = {
         actions = {
           ["ctrl-h"] = { actions.toggle_hidden }
         }
       },
-      files = {
+      files      = {
         actions = {
           ["ctrl-h"] = { actions.toggle_hidden }
         },

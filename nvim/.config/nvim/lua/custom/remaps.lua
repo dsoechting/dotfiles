@@ -63,14 +63,6 @@ keymap.set('n', '<C-m>', '<cmd>cprev<CR>zz')
 
 
 -- Lsp
--- nmap('gd', telescope_builtin.lsp_definitions, '[G]oto [D]efinition')
--- nmap('gr', function() telescope_builtin.lsp_references({ fname_width = 100 }) end, '[G]oto [R]eferences')
--- nmap('gi', telescope_builtin.lsp_implementations, '[G]oto [I]mplementation')
-nmap('<leader>D', telescope_builtin.lsp_type_definitions, 'Type [D]efinition')
-nmap('<leader>ds', telescope_builtin.lsp_document_symbols, '[D]ocument [S]ymbols')
-nmap('<leader>ws', telescope_builtin.lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
-
--- Lsp fzf-lua
 nmap('gd', "<cmd>FzfLua lsp_definitions     jump_to_single_result=true ignore_current_line=true<cr>",
     '[G]oto [D]efinition')
 nmap('gr', "<cmd>FzfLua lsp_references     jump_to_single_result=true ignore_current_line=true<cr>",
@@ -96,7 +88,6 @@ vim.keymap.set('n', '<C-l>', require('smart-splits').move_cursor_right)
 keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
 
 -- Telescope
-keymap.set("n", "<leader>fg", "<cmd>Telescope live_grep<cr>", { desc = "Find string in cwd" })
 keymap.set('n', '<leader>fk', telescope_builtin.keymaps, { desc = '[S]earch [K]eymaps' })
 
 -- fzf-lua
@@ -110,22 +101,21 @@ keymap.set("n", "<leader>ft", fzf_lua.colorschemes, { desc = "" })
 keymap.set("n", "<leader>fc", fzf_lua.quickfix_stack, { desc = "" })
 
 -- Harpoon
-keymap.set("n", "<leader>h", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end,
+keymap.set("n", "<leader>fh", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end,
     { desc = "Toggle Harpoon menu" })
-keymap.set("n", "<leader>H", function() harpoon:list():append() end, { desc = "Append to Harpoon list" })
+keymap.set("n", "<leader>hh", function() harpoon:list():append() end, { desc = "Append to Harpoon list" })
 
-keymap.set("n", "<leader>1", function() harpoon:list():select(1) end)
-keymap.set("n", "<leader>2", function() harpoon:list():select(2) end)
-keymap.set("n", "<leader>3", function() harpoon:list():select(3) end)
-keymap.set("n", "<leader>4", function() harpoon:list():select(4) end)
-keymap.set("n", "<leader>5", function() harpoon:list():select(5) end)
+keymap.set("n", "<leader>j", function() harpoon:list():select(1) end)
+keymap.set("n", "<leader>k", function() harpoon:list():select(2) end)
+keymap.set("n", "<leader>l", function() harpoon:list():select(3) end)
+keymap.set("n", "<leader>;", function() harpoon:list():select(4) end)
 
 -- Zen mode
 keymap.set("n", "<leader>z", "<cmd>ZenMode<cr>", { desc = "Toggle ZenMode" })
 
 -- Format
-keymap.set("n", "<leader>P", "<cmd>Format<cr>", { desc = "Format code" })
+keymap.set("n", "<leader>rp", "<cmd>Format<cr>", { desc = "Format code" })
 
 -- Trouble
 nmap("<leader>tt", "<cmd>Trouble diagnostics toggle<cr>", 'Toggle Trouble')
-nmap("<leader>tq", "<cmd>Trouble qflist toggle<cr>", 'Toggle Trouble')
+nmap("<leader>tq", "<cmd>Trouble qflist toggle<cr>", 'Toggle Trouble Quickfix')
